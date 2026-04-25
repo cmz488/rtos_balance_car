@@ -89,7 +89,9 @@ add_executable(${CMAKE_PROJECT_NAME}
         MPU6050/DMP/Src/delay.c
         MPU6050/DMP/Inc/delay.h
         MPU6050/DMP/Src/sys.c
-        MPU6050/DMP/Inc/sys.h)
+        MPU6050/DMP/Inc/sys.h
+        PID/Src/UpPid.cpp
+        PID/Inc/UpPid.h)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)

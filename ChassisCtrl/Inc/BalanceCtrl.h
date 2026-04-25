@@ -11,6 +11,7 @@
 #include "AnglePid.h"
 #include "speed_pid.h"
 #include <tuple>
+#include "UpPid.h"
 extern "C" {
 #endif
 
@@ -32,8 +33,7 @@ inline float angle_speed_kp=0.0f;
 inline float angle_speed_ki=0.0f;
 inline float angle_speed_kd=0.0f;
 class BalanceCtrl {
-  AnglePID angle_speed_pid_; //最内环 角速度环
-  SpeedPID pitch_pid_; //中间 直立环
+  UpPid pitch_pid_; //中间 直立环
   SpeedPID speed_pid_; //外环 速度环
   SpeedPID turn_pid_; //差速环控制转向
 

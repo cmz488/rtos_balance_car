@@ -25,7 +25,7 @@ void ChassisRun_Task() {
 }
 }
 
-constexpr float speed_filter_alpha = 0.3f;
+constexpr float speed_filter_alpha = 0.7f;
 uint8_t runFlag = 0;
 uint8_t keyNum = 0;
 float left_speed;
@@ -55,8 +55,8 @@ void ChassisRun::run() {
     if (runFlag) {
       LED_ON(0);
       LED_OFF(1);
-      left_speed = Encoder_Get(1) / 44.0f / DT / 35.0f;
-      right_speed = Encoder_Get(2) / 44.0f / DT / 35.0f;
+      left_speed = speed_filter_alpha*(Encoder_Get(1) / 44.0f / DT / 35.0f)+ (1-speed_filter_alpha)*last_left_speed;
+      right_speed =speed_filter_alpha*(Encoder_Get(2) / 44.0f / DT / 35.0f)+ (1-speed_filter_alpha)*last_right_speed;
       last_left_speed = left_speed;
       last_right_speed = right_speed;
       balance_ctrl.update(-(pitch1 - Angle_ki), left_speed - right_speed,
