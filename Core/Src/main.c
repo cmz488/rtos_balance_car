@@ -34,6 +34,7 @@
 #include "Motor.h"
 #include "MyI2C.h"
 #include "bsp_dwt.h"
+#include "DMP_MPU6050.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -108,6 +109,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
   Encoder_Init();
   MPU6050_Init();
+  DWT_Delay_ms(500);
+  DMP_MPU6050_Init();
   DWT_Delay_ms(500);
   Motor_Init();
   MyI2C_Init();

@@ -9,31 +9,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "stdarg.h"
-#include "stdint.h"
-#include "main.h"
-inline void pre_write_c(int count,...) {
-  uint8_t frame_tail[4] = {0x00, 0x00, 0x80, 0x7F}; // float 0.0f 的字节表示
-  float buf[11]; // 10 个参数 + frame_tail
-  va_list args;
-  va_start(args, count);
-  for (int i = 0; i < count; i++) {
-    buf[i] = (float)va_arg(args, double); // float 会被提升为 double
-  }
-  va_end(args);
-  buf[count] = frame_tail[3] | (frame_tail[2] << 8) | (frame_tail[1] << 16) | (frame_tail[0] << 24); // 将 frame_tail 转换为 float 存储在 buf 中
-  HAL_UART_Transmit(&huart1,
-                    (uint8_t*)(buf),
-                    (count + 1) * sizeof(float),
-                    1000);
-}
-
-#define PP_ARG_N(_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,N,...) N
-#define COUNT_ARGS(...) PP_ARG_N(__VA_ARGS__,9,8,7,6,5,4,3,2,1,0)
-#define write_c(...) pre_write_c(COUNT_ARGS(__VA_ARGS__), __VA_ARGS__)
-
-  void Serial_UART_IDLE_Callback();
-  void relocate(float *kp[],float* ki[],float* kd[]);
 #ifdef __cplusplus
 }
 #endif

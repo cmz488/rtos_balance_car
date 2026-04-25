@@ -12,6 +12,7 @@
 extern "C" {
 #include "MPU6050.h"
 #include "MPU6050_Reg.h"
+#include "inv_mpu.h"
 static MPU6050Task mpu6050Task; // 创建 MPU6050 任务实例
 void MPU6050_Task() {
   mpu6050Task.start(const_cast<char *>("mpu6050Task"), 2048, osPriorityAboveNormal); // 启动 MPU6050 任务
@@ -25,6 +26,7 @@ float g_real[3];
 float pitch1;
 float roll1;
 float yaw1;
+float pitch,roll,yaw;
 std::array<float, 4> q = {1, 0, 0, 0};
 extern FusionAHRS fusionAHRS;
 
@@ -42,6 +44,8 @@ void MPU6050Task::run() {
     roll1 = atan2f(2.0f * (q[0] * q[1] + q[2] * q[3]), 1.0f - 2.0f * (q[1] * q[1] + q[2] * q[2])) / MY_PI * 180.0f;
     pitch1 = asinf(2.0f * (q[0] * q[2] - q[3] * q[1])) / MY_PI * 180;
     yaw1 = atan2f(2.0f * (q[0] * q[3] + q[1] * q[2]), 1.0f - 2.0f * (q[2] * q[2] + q[3] * q[3])) / MY_PI * 180;
+
+    MPU6050_DMP_Get_Data(&pitch, &roll, &yaw);
     osDelay(DT*1000);
   }
 }

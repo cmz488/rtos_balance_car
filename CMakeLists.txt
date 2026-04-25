@@ -75,7 +75,21 @@ add_executable(${CMAKE_PROJECT_NAME}
         ChassisCtrl/Src/ChassisOutline.cpp
         ChassisCtrl/Inc/ChassisOutline.h
         Serial/Src/Serial.cpp
-        Task/Src/Debug.cpp)
+        Task/Src/Debug.cpp
+        MPU6050/DMP/Inc/dmpKey.h
+        MPU6050/DMP/Inc/dmpMap.h
+        MPU6050/DMP/Src/inv_mpu.c
+        MPU6050/DMP/Inc/inv_mpu.h
+        MPU6050/DMP/Src/inv_mpu_dmp_motion_driver.c
+        MPU6050/DMP/Inc/inv_mpu_dmp_motion_driver.h
+        MPU6050/DMP/Src/DMP_MPU6050.c
+        MPU6050/DMP/Inc/DMP_MPU6050.h
+        MPU6050/DMP/Src/MPU6050_I2C.c
+        MPU6050/DMP/Inc/MPU6050_I2C.h
+        MPU6050/DMP/Src/delay.c
+        MPU6050/DMP/Inc/delay.h
+        MPU6050/DMP/Src/sys.c
+        MPU6050/DMP/Inc/sys.h)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
@@ -111,6 +125,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         ChassisCtrl
         BUZZ/Inc
         Serial/inc
+        MPU6050/DMP/Inc
 )
 
 # Add project symbols (macros)
