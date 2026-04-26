@@ -32,7 +32,7 @@ float left_speed;
 float last_left_speed;
 float right_speed;
 float last_right_speed;
-extern float pitch1;
+extern float pitch;
 
 extern int16_t g_raw[3];
 extern BalanceCtrl balance_ctrl;
@@ -49,18 +49,18 @@ void ChassisRun::run() {
       runFlag = 1 - runFlag;
     }
 
-    if (pitch1 > 50 || pitch1 < -50) {
+    if (pitch > 50 || pitch < -50) {
       runFlag = 0;
     }
     if (runFlag) {
       LED_ON(0);
       LED_OFF(1);
-      left_speed = speed_filter_alpha*(Encoder_Get(1) / 44.0f / DT / 35.0f)+ (1-speed_filter_alpha)*last_left_speed;
-      right_speed =speed_filter_alpha*(Encoder_Get(2) / 44.0f / DT / 35.0f)+ (1-speed_filter_alpha)*last_right_speed;
+      left_speed = speed_filter_alpha*(Encoder_Get(1))+ (1-speed_filter_alpha)*last_left_speed;
+      right_speed =speed_filter_alpha*(Encoder_Get(2))+ (1-speed_filter_alpha)*last_right_speed;
       last_left_speed = left_speed;
       last_right_speed = right_speed;
-      balance_ctrl.update(-(pitch1 - Angle_ki), left_speed - right_speed,
-                          (left_speed + right_speed) / 2.0f * 2 * M_PI * 0.0325f, g_real[1],
+      balance_ctrl.update((pitch - Angle_ki), left_speed - right_speed,
+                          left_speed + right_speed, g_real[1],
                           DT);
       std::tie(left_pwm, right_pwm) = balance_ctrl.get_out_put();
       Motor_SetPWM(1, left_pwm);

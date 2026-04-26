@@ -51,7 +51,7 @@ float GyroBiasEKF::getBias() const {
 
 FusionAHRS::FusionAHRS(float sampleFreq)
   : sampleFreq_(sampleFreq),
-    twoKp_(20.0f),
+    twoKp_(10.0f),
     twoKi_(0.1f),
     integralFBx_(0),
     integralFBy_(0),

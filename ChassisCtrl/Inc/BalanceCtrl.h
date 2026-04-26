@@ -22,7 +22,7 @@ extern "C" {
 
 #ifdef __cplusplus
 inline float Angle_kp=0.0f;
-inline float Angle_ki=0.0f;
+inline float Angle_ki=27.1f;
 inline float Angle_kd=0.0f;
 
 inline float Speed_kp=0.0f;
@@ -36,6 +36,7 @@ class BalanceCtrl {
   UpPid pitch_pid_; //中间 直立环
   SpeedPID speed_pid_; //外环 速度环
   SpeedPID turn_pid_; //差速环控制转向
+  AnglePID angle_speed_pid_;
 
   float target_speed_;
 

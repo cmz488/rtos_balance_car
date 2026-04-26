@@ -39,14 +39,13 @@ void MPU6050Task::run() {
       a_real[i] = a_raw[i] * ACCL_RAW_TO_REAL_4G;
       g_real[i] = g_raw[i] * GYRO_RAW_TO_REAL_250degree;
     }
-    // fusionAHRS.update(g_real[0] / 180.0f * MY_PI, g_real[1] / 180.0f * MY_PI, g_real[2] / 180.0f * MY_PI, a_real[0],
-    //                   a_real[1], a_real[2]);
-    // q = fusionAHRS.getQuaternion();
-    // roll1 = atan2f(2.0f * (q[0] * q[1] + q[2] * q[3]), 1.0f - 2.0f * (q[1] * q[1] + q[2] * q[2])) / MY_PI * 180.0f;
-    // pitch1 = asinf(2.0f * (q[0] * q[2] - q[3] * q[1])) / MY_PI * 180;
-    // yaw1 = atan2f(2.0f * (q[0] * q[3] + q[1] * q[2]), 1.0f - 2.0f * (q[2] * q[2] + q[3] * q[3])) / MY_PI * 180;
-
-      pa = atan2f(a_real[1], a_real[2]) / MY_PI * 180.0f;
+    fusionAHRS.update(g_real[0] / 180.0f * MY_PI, g_real[1] / 180.0f * MY_PI, g_real[2] / 180.0f * MY_PI, a_real[0],
+                      a_real[1], a_real[2]);
+    q = fusionAHRS.getQuaternion();
+    roll1 = atan2f(2.0f * (q[0] * q[1] + q[2] * q[3]), 1.0f - 2.0f * (q[1] * q[1] + q[2] * q[2])) / MY_PI * 180.0f;
+    pitch1 = asinf(2.0f * (q[0] * q[2] - q[3] * q[1])) / MY_PI * 180;
+    yaw1 = atan2f(2.0f * (q[0] * q[3] + q[1] * q[2]), 1.0f - 2.0f * (q[2] * q[2] + q[3] * q[3])) / MY_PI * 180;
+      pa = atan2f(a_real[0], a_real[2]) / MY_PI * 180.0f;
       ra = atan2f(-a_real[0], sqrtf(a_real[1] * a_real[1] + a_real[2] * a_real[2])) / MY_PI * 180.0f;
       ya = atan2f(g_real[1], g_real[0]) / MY_PI * 180.0f;
       pitch = lb * (pitch + g_real[0] * DT) + (1 - lb) * pa;

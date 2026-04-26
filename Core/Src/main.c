@@ -110,8 +110,6 @@ int main(void)
   Encoder_Init();
   MPU6050_Init();
   DWT_Delay_ms(500);
-  DMP_MPU6050_Init();
-  DWT_Delay_ms(500);
   Motor_Init();
   MyI2C_Init();
   gray_sensor_init();
